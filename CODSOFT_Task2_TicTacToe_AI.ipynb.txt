@@ -1,0 +1,250 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "iJ-0fIQCcaoK",
+        "outputId": "c1268f8e-eb72-4a88-98c8-de6458eb3fe4"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "TIC-TAC-TOE AI\n",
+            "You are X\n",
+            "Computer is O\n",
+            "1 | 2 | 3\n",
+            "4 | 5 | 6\n",
+            "7 | 8 | 9\n"
+          ]
+        }
+      ],
+      "source": [
+        "\n",
+        "print(\"TIC-TAC-TOE AI\")\n",
+        "print(\"You are X\")\n",
+        "print(\"Computer is O\")\n",
+        "print(\"1 | 2 | 3\")\n",
+        "print(\"4 | 5 | 6\")\n",
+        "print(\"7 | 8 | 9\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "import random\n",
+        "\n",
+        "def print_board(board):\n",
+        "    print()\n",
+        "    print(\" \" + \" | \".join(board[0:3]))\n",
+        "    print(\"---+---+---\")\n",
+        "    print(\" \" + \" | \".join(board[3:6]))\n",
+        "    print(\"---+---+---\")\n",
+        "    print(\" \" + \" | \".join(board[6:9]))\n",
+        "    print()\n",
+        "\n",
+        "def check_winner(board, player):\n",
+        "    lines = [\n",
+        "        (0, 1, 2), (3, 4, 5), (6, 7, 8),\n",
+        "        (0, 3, 6), (1, 4, 7), (2, 5, 8),\n",
+        "        (0, 4, 8), (2, 4, 6)\n",
+        "    ]\n",
+        "\n",
+        "    for a, b, c in lines:\n",
+        "        if board[a] == board[b] == board[c] == player:\n",
+        "            return True\n",
+        "\n",
+        "    return False"
+      ],
+      "metadata": {
+        "id": "rDNaTwtrcy7L"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "def computer_turn(board):\n",
+        "    available = [\n",
+        "        i for i, cell in enumerate(board)\n",
+        "        if cell not in [\"X\", \"O\"]\n",
+        "    ]\n",
+        "\n",
+        "    if available:\n",
+        "        position = random.choice(available)\n",
+        "        board[position] = \"O\"\n",
+        "        print(\"Computer chose position\", position + 1)"
+      ],
+      "metadata": {
+        "id": "CZIzoib3c_DM"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "def play_game():\n",
+        "    board = [str(i) for i in range(1, 10)]\n",
+        "\n",
+        "    print(\"TIC-TAC-TOE AI\")\n",
+        "    print(\"You are X. Computer is O.\")\n",
+        "    print(\"Enter a position from 1 to 9.\")\n",
+        "    print_board(board)\n",
+        "\n",
+        "    while True:\n",
+        "        move = input(\"Your move (1-9): \").strip()\n",
+        "\n",
+        "        if move not in \"123456789\" or len(move) != 1:\n",
+        "            print(\"Enter a number from 1 to 9.\")\n",
+        "            continue\n",
+        "\n",
+        "        position = int(move) - 1\n",
+        "\n",
+        "        if board[position] in [\"X\", \"O\"]:\n",
+        "            print(\"Position occupied. Try again.\")\n",
+        "            continue\n",
+        "\n",
+        "        board[position] = \"X\"\n",
+        "        print_board(board)\n",
+        "\n",
+        "        if check_winner(board, \"X\"):\n",
+        "            print(\"Congratulations! You win!\")\n",
+        "            break\n",
+        "\n",
+        "        if all(cell in [\"X\", \"O\"] for cell in board):\n",
+        "            print(\"It's a draw!\")\n",
+        "            break\n",
+        "\n",
+        "        computer_turn(board)\n",
+        "        print_board(board)\n",
+        "\n",
+        "        if check_winner(board, \"O\"):\n",
+        "            print(\"Computer wins! Try again.\")\n",
+        "            break\n",
+        "\n",
+        "        if all(cell in [\"X\", \"O\"] for cell in board):\n",
+        "            print(\"It's a draw!\")\n",
+        "            break"
+      ],
+      "metadata": {
+        "id": "aMfAACu0dDj-"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "play_game()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ntMQAE2IdI2i",
+        "outputId": "23b14fb2-f0cd-43ef-afd0-a2255c50b444"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "TIC-TAC-TOE AI\n",
+            "You are X. Computer is O.\n",
+            "Enter a position from 1 to 9.\n",
+            "\n",
+            " 1 | 2 | 3\n",
+            "---+---+---\n",
+            " 4 | 5 | 6\n",
+            "---+---+---\n",
+            " 7 | 8 | 9\n",
+            "\n",
+            "Your move (1-9): 5\n",
+            "\n",
+            " 1 | 2 | 3\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " 7 | 8 | 9\n",
+            "\n",
+            "Computer chose position 7\n",
+            "\n",
+            " 1 | 2 | 3\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " O | 8 | 9\n",
+            "\n",
+            "Your move (1-9): 3\n",
+            "\n",
+            " 1 | 2 | X\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " O | 8 | 9\n",
+            "\n",
+            "Computer chose position 1\n",
+            "\n",
+            " O | 2 | X\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " O | 8 | 9\n",
+            "\n",
+            "Your move (1-9): 9\n",
+            "\n",
+            " O | 2 | X\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " O | 8 | X\n",
+            "\n",
+            "Computer chose position 2\n",
+            "\n",
+            " O | O | X\n",
+            "---+---+---\n",
+            " 4 | X | 6\n",
+            "---+---+---\n",
+            " O | 8 | X\n",
+            "\n",
+            "Your move (1-9): 6\n",
+            "\n",
+            " O | O | X\n",
+            "---+---+---\n",
+            " 4 | X | X\n",
+            "---+---+---\n",
+            " O | 8 | X\n",
+            "\n",
+            "Congratulations! You win!\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
